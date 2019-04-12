@@ -23,3 +23,9 @@ RUN apk add --update libstdc++ && \
     rm -rf /var/cache/apk/*
 
 COPY --from=builder /usr/local/sbin/fgms /usr/local/sbin/fgms
+
+ENTRYPOINT [ "/usr/local/sbin/fgms" ]
+
+EXPOSE 5000/udp
+EXPOSE 5001
+EXPOSE 5002
