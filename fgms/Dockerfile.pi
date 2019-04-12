@@ -3,6 +3,7 @@
 #
 
 FROM balenalib/rpi-alpine:latest AS builder
+RUN [ "cross-build-start" ]
 RUN apk add --update alpine-sdk cmake
 
 COPY patches /patches
@@ -21,11 +22,14 @@ WORKDIR /fgms/build
 RUN cmake -DUSER_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release ../src && \
     make && \
     make install
+RUN [ "cross-build-end" ]
 
 FROM balenalib/rpi-alpine:latest
+RUN [ "cross-build-start" ]
 RUN apk add --update libstdc++ && \
     rm -rf /var/cache/apk/*
 
+RUN [ "cross-build-end" ]
 COPY --from=builder /usr/local/sbin/fgms /usr/local/sbin/fgms
 
 ENTRYPOINT [ "/usr/local/sbin/fgms" ]
