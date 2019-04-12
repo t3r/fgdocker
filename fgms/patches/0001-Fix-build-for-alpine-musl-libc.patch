@@ -1,0 +1,50 @@
+From 530bf9340c3d457eafd652a350e673020e2b150a Mon Sep 17 00:00:00 2001
+From: Torsten Dreyer <torsten@t3r.de>
+Date: Fri, 12 Apr 2019 15:58:44 +0000
+Subject: [PATCH] Fix build for alpine/musl libc
+
+---
+ src/libcli/cli_client.cxx | 2 +-
+ src/libcli/libcli.cxx     | 4 ++++
+ src/server/error.h        | 1 +
+ 3 files changed, 6 insertions(+), 1 deletion(-)
+ create mode 100644 src/server/error.h
+
+diff --git a/src/libcli/cli_client.cxx b/src/libcli/cli_client.cxx
+index e107c0d..538967b 100644
+--- a/src/libcli/cli_client.cxx
++++ b/src/libcli/cli_client.cxx
+@@ -29,7 +29,7 @@
+ #include <_timeval.h>
+ #endif
+ 
+-
++#include <sys/time.h>
+ #ifdef _MSC_VER
+ 	#include <conio.h> // for _kbhit(), _getch
+ 	#define kbhit	_kbhit
+diff --git a/src/libcli/libcli.cxx b/src/libcli/libcli.cxx
+index 989ea8c..50fb752 100644
+--- a/src/libcli/libcli.cxx
++++ b/src/libcli/libcli.cxx
+@@ -45,6 +45,10 @@
+ 	#endif
+ #endif
+ 
++#ifndef CTRL
++        #define CTRL(a)  ( a & 037 )
++#endif
++
+ namespace LIBCLI
+ {
+ 
+diff --git a/src/server/error.h b/src/server/error.h
+new file mode 100644
+index 0000000..1a1e7f0
+--- /dev/null
++++ b/src/server/error.h
+@@ -0,0 +1 @@
++// unused
+-- 
+2.18.1
+
