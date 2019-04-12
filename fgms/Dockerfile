@@ -8,9 +8,13 @@ RUN apk add --update alpine-sdk cmake
 COPY patches /patches
 
 WORKDIR /fgms
+
+ARG BRANCH="0.13.4"
+ENV BRANCH=${BRANCH}
+
 RUN git clone https://git.code.sf.net/p/fgms/src && \
     cd src && \
-    git checkout 0.13.3 && \
+    git checkout ${BRANCH} && \
     git apply < /patches/0001-Fix-build-for-alpine-musl-libc.patch
 
 WORKDIR /fgms/build
