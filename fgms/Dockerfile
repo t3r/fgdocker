@@ -27,6 +27,7 @@ RUN apk add --update libstdc++ && \
     rm -rf /var/cache/apk/*
 
 COPY --from=builder /usr/local/sbin/fgms /usr/local/sbin/fgms
+COPY fgms.conf /usr/local/etc/fgms.conf
 
 ENTRYPOINT [ "/usr/local/sbin/fgms" ]
 

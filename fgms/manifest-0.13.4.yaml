@@ -1,0 +1,12 @@
+image: flightgear/fgms:0.13.4
+manifests:
+  -
+    image: flightgear/fgms:amd64-alpine-0.13.4
+    platform:
+      architecture: amd64
+      os: linux
+  -
+    image: flightgear/fgms:rpi-alpine-0.13.4
+    platform:
+      architecture: arm
+      os: linux
