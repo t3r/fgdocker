@@ -1,4 +1,4 @@
-FROM flightgear/simgear:opensuse-latest AS plibbuild
+FROM flightgear/simgear.build:opensuse-latest AS plibbuild
   
 WORKDIR /plib
 
