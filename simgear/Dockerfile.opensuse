@@ -1,0 +1,52 @@
+FROM opensuse:latest AS sgbuild
+#  zypper --gpg-auto-import-keys ar http://download.opensuse.org/repositories/KDE:/Qt5/openSUSE_Leap_42.3/KDE:Qt5.repo && 
+#  libqt5-qtbase-devel 
+#  libqt5-qtdeclarative-devel 
+#  libQt5Gui-devel 
+#  libQt5Widgets-devel 
+  
+RUN \
+  zypper --gpg-auto-import-keys in -y \
+  boost-devel \
+  cairo-devel \
+  cmake \
+  dbus-1-devel \
+  freetype2-devel \
+  freeglut-devel \
+  gcc-c++ \
+  git \
+  glew-devel \
+  gstreamer-devel \
+  gtk2-devel \
+  gtkglext-devel \
+  libcurl-devel \
+  libjasper-devel \
+  libjpeg8-devel \
+  libOpenSceneGraph-devel \
+  libpng16-devel \
+  libpoppler-devel \
+  libSDL-devel \
+  libSDL2-devel \
+  libtiff-devel \
+  libudev-devel \
+  libxml2-devel \
+  libXmu-devel \
+  libXi-devel \
+  libXrandr-devel \
+  openal-soft-devel \
+  Mesa-devel \
+  zlib-devel \
+  && zypper clean -a
+
+WORKDIR /simgear
+
+RUN git clone --depth 1 https://git.code.sf.net/p/flightgear/simgear && \
+    mkdir build && cd build && cmake -G "Unix Makefiles" \
+                              -D CMAKE_BUILD_TYPE=Release \
+                              -D CMAKE_PREFIX_PATH="/usr/local" \
+                              -D CMAKE_INSTALL_PREFIX:PATH=/usr/local \
+                              -D CMAKE_CXX_FLAGS="-pipe" \
+                              -D ENABLE_RTI=OFF \
+                              -D ENABLE_DNS=ON \
+                              ../simgear \
+                        && make && make install
