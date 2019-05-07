@@ -11,7 +11,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     libboost-all-dev \
     libglew-dev \
-    libopenal-dev
+    libopenal-dev \
+    ca-certificates \
+    git \
+    libjpeg-dev \
+    libghc-zlib-dev \
+    libcurl4-openssl-dev \
+    libpng-dev \
+    libtiff-dev \
+    libcairo-dev \
+    pkg-config
 
 #COPY patches /patches
 
